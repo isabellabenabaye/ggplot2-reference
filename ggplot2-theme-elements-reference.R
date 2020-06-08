@@ -23,10 +23,10 @@ theme_update(text = element_text(family = "Fira Code"),
              plot.caption.position = "plot",
              legend.text = element_text(size = 14),
              legend.background = element_rect(fill = "#F3F4F6", color = "#F3F4F6"),
-             legend.position = c(.85, .9))
+             legend.position = c(.85, .85))
 
 
-# Plot ----
+# Plots ----
 iris %>% 
   ggplot(aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
   geom_point(size = 4, alpha = 0.6) +
@@ -34,4 +34,16 @@ iris %>%
        x = "Sepal length", y = "Sepal width",
        caption = "Data: Fisher's Iris dataset") +
   scale_color_paletteer_d("ggthemes::calc", labels = c("Setosa", "Versicolor", "Virginica")) +  ## fix labels of the legend
-  ggsave("ggplot-demo.png", device = "png", type = "cairo", width = 10, height = 10, dpi = 300) 
+  ggsave("ggplot-demo-iris.png", device = "png", type = "cairo", width = 10, height = 10, dpi = 300) 
+
+
+mtcars %>% 
+  ggplot(aes(x = mpg, y = hp, color = factor(cyl))) +
+  geom_point(size = 4, alpha = 0.6) +
+  labs(title = "Miles per Gallon & Horsepower", subtitle = "of 32 Automobiles(1973–74 models)",
+       x = "Miles per gallon", y = "Horsepower", color = "Number of\ncylinders",
+       caption = "Data: 1974 Motor Trend US magazine") +
+  scale_color_paletteer_d("ggthemes::calc") +  ## fix labels of the legend
+  scale_x_continuous(limits = c(10,35), expand = expansion(0,0)) +
+  scale_y_continuous(limits = c(0,350), expand = expansion(0,0), label = c("","100", "200", "300", "")) +
+  ggsave("ggplot-demo-mtcars.png", device = "png", type = "cairo", width = 10, height = 10, dpi = 300)
